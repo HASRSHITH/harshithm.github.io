@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Harshith M — Portfolio</title>
+<link rel="icon" href="" />
+<style>
+  :root{
+    --bg:#0d1b2a; --panel:#112533; --card:#143044;
+    --muted:#a8b3bf; --accent:#ffae42; --glass: rgba(255,255,255,0.04);
+    --radius:12px;
+  }
+  /* basic reset */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:Inter, system-ui, Arial, sans-serif;
+    background:linear-gradient(180deg,var(--bg), #07101a);
+    color: #e6eef6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* layout */
+  .app{
+    display:flex;
+    min-height:100vh;
+  }
+
+  /* SIDEBAR (desktop) */
+  .sidebar{
+    width:260px;
+    background:linear-gradient(180deg,var(--panel), #0b1a21);
+    padding:28px 20px;
+    border-right:1px solid rgba(255,255,255,0.03);
+    position:fixed;
+    top:0;left:0;bottom:0;
+  }
+  .brand{
+    font-size:20px;font-weight:700;letter-spacing:1px;color:var(--accent);
+    margin-bottom:18px;
+  }
+  .sidebar nav{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+  .sidebar a{
+    color:var(--muted); text-decoration:none; padding:10px 12px; border-radius:8px;
+    transition:all .18s;
+  }
+  .sidebar a:hover, .sidebar a.active{ background:var(--glass); color:#fff; transform:translateX(6px) }
+
+  /* main content area */
+  .main{
+    margin-left:260px;
+    flex:1;
+    padding:28px;
+  }
+
+  /* top nav for mobile */
+  .topbar{
+    display:none;
+    background:linear-gradient(90deg,#0d47a1,#1a73e8);
+    padding:12px 16px;
+    align-items:center; justify-content:space-between;
+  }
+  .topbar .menu-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#fff;padding:8px;border-radius:8px}
+
+  /* hero */
+  .hero{
+    display:flex;gap:24px;align-items:center;margin-bottom:28px;
+  }
+  .hero .intro{flex:1}
+  .hero h1{font-size:32px;margin-bottom:8px}
+  .hero p{color:var(--muted);max-width:70%}
+  .typed{color:var(--accent); font-weight:600}
+
+  /* cards/projects */
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px}
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:var(--radius); padding:14px; box-shadow:0 6px 20px rgba(2,6,23,0.6);
+    transition:transform .18s, box-shadow .18s;
+  }
+  .card:hover{ transform:translateY(-6px); box-shadow:0 14px 40px rgba(2,6,23,0.8) }
+  .card img{width:100%;border-radius:8px;margin-bottom:10px;display:block}
+  .card h3{margin-bottom:6px}
+  .card p{color:var(--muted); font-size:0.95rem}
+  .card .meta{display:flex;gap:10px;margin-top:10px;align-items:center}
+  .btn{background:var(--accent);color:#072022;padding:8px 12px;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+
+  /* modal */
+  .modal-backdrop{
+    position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:9999
+  }
+  .modal{width:min(900px,100%);background:linear-gradient(180deg,#0b1c2a,#07121a);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
+  .modal img{width:100%;border-radius:8px;margin-bottom:12px}
+  .modal h3{margin-bottom:6px}
+  .modal p{color:var(--muted);margin-bottom:12px}
+
+  /* contact */
+  .contact-card{background: linear-gradient(180deg,#07121a,#07151a); padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+  input, textarea{
+    width:100%; padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);
+    background:transparent;color:var(--muted);margin-top:8px;
+  }
+  .small{font-size:0.875rem;color:var(--muted);margin-top:8px}
+
+  /* responsiveness */
+  @media (max-width:900px){
+    .sidebar{display:none}
+    .main{margin-left:0}
+    .topbar{display:flex}
+    .hero p{max-width:100%}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR (desktop) -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="brand">HARSHITH <span style="color:var(--accent)">M</span></div>
+    <nav>
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <div style="margin-top:18px;color:var(--muted);font-size:0.9rem">
+      <div>📞 8660415899</div>
+      <div style="margin-top:6px">✉️ mharshith585@gmail.com</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <!-- Topbar for mobile -->
+    <div class="topbar">
+      <div style="font-weight:700;color:#fff">Harshith M</div>
+      <button class="menu-btn" onclick="toggleMobileNav()">Menu</button>
+    </div>
+
+    <!-- HERO / HOME -->
+    <section id="home" class="hero">
+      <div class="intro">
+        <h1>Hi, I'm <span style="color:var(--accent)">Harshith</span></h1>
+        <p>I build simple, reliable web apps using <span class="typed"></span></p>
+      </div>
+      <div style="width:320px">
+        <div style="background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:12px">
+          <h4 style="margin-bottom:8px">Quick Info</h4>
+          <div class="small">BE - Computer Science (CGPA 7)</div>
+          <div class="small">Skills: Python • Django • SQL • HTML/CSS/JS</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About</h2>
+      <div style="margin-top:10px;color:var(--muted);max-width:880px">
+        I am Harshith M — a Full-Stack Developer focused on building practical web systems: backend APIs with Python/Django and clean front-ends with HTML/CSS/JS.
+        I prefer simple, maintainable solutions that solve real user problems like roadside assistance, record systems and automation tools.
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="grid" style="margin-top:14px">
+        <!-- Project A -->
+        <article class="card" data-project="vehicle">
+          <img src="https://images.pexels.com/photos/4489742/pexels-photo-4489742.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="On-Road Vehicle Assistance">
+          <h3>On-Road Vehicle Assistance App</h3>
+          <p class="small">Request towing, fuel delivery, mechanic help and emergency assistance with live-location sharing.</p>
+          <div class="meta">
+            <button class="btn" onclick="openProject('vehicle')">Open</button>
+            <div style="flex:1"></div>
+            <div class="small">Django • REST • Maps • Twilio (optional)</div>
+          </div>
+        </article>
+
+        <!-- Project B -->
+        <article class="card" data-project="student">
+          <img src="https://images.pexels.com/photos/5905496/pexels-photo-5905496.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Student Record System">
+          <h3>Student Record Management</h3>
+          <p class="small">Simple CRUD system to manage student data, search, and update records stored in SQL.</p>
+          <div class="meta">
+            <button class="btn" onclick="openProject('student')">Open</button>
+            <div style="flex:1"></div>
+            <div class="small">Django • SQLite / MySQL • Auth</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" style="margin-top:18px">
+      <h2>Contact</h2>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;margin-top:12px">
+        <div class="contact-card">
+          <form id="contactForm" onsubmit="submitContact(event)">
+            <label class="small">Name</label>
+            <input id="c_name" type="text" required />
+            <label class="small">Email</label>
+            <input id="c_email" type="email" required />
+            <label class="small">Message</label>
+            <textarea id="c_msg" rows="5" required></textarea>
+            <div style="margin-top:12px">
+              <button class="btn" type="submit">Send Message</button>
+            </div>
+            <div id="formStatus" class="small" style="margin-top:8px;color:var(--muted)"></div>
+          </form>
+        </div>
+
+        <aside style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#07121a,#091826);">
+          <h4>Contact Info</h4>
+          <div class="small" style="margin-top:8px">📞 8660415899</div>
+          <div class="small" style="margin-top:6px">✉️ <a href="mailto:mharshith585@gmail.com" style="color:var(--accent);text-decoration:none">mharshith585@gmail.com</a></div>
+          <div style="margin-top:12px">
+            <a class="btn" href="#projects">View Projects</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </div><!-- end main -->
+</div><!-- end app -->
+
+<!-- PROJECT MODAL -->
+<div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-hidden="true" onclick="closeModal(event)">
+  <div class="modal" role="document" onclick="event.stopPropagation()">
+    <img id="modalImg" src="" alt="project image">
+    <h3 id="modalTitle"></h3>
+    <p id="modalDesc"></p>
+    <p id="modalWhy" class="small"></p>
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <a id="modalRepo" class="btn" href="#" target="_blank">View Repository</a>
+      <button class="btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* --------------------------
+  Desktop nav active state
+---------------------------*/
+document.querySelectorAll('.sidebar a, .topbar a').forEach(a=>{
+  a.addEventListener('click', ()=> {
+    document.querySelectorAll('.sidebar a').forEach(x=>x.classList.remove('active'))
+    a.classList.add('active')
+  })
+})
+
+/* --------------------------
+  Mobile menu toggle (simple)
+---------------------------*/
+function toggleMobileNav(){
+  const nav = document.querySelector('.sidebar');
+  nav.style.display = (nav.style.display === 'block') ? 'none' : 'block';
+}
+
+/* --------------------------
+  Typed text effect (hero)
+---------------------------*/
+const typedEl = document.querySelector('.typed');
+const typedText = "Full-Stack Developer — Python • Django • SQL";
+let ti = 0;
+(function typeLoop(){
+  if(!typedEl) return;
+  typedEl.textContent += typedText.charAt(ti) || '';
+  ti++;
+  if(ti <= typedText.length) setTimeout(typeLoop, 45);
+})();
+
+/* --------------------------
+  Project details (modal)
+---------------------------*/
+const projects = {
+  vehicle:{
+    title: "On-Road Vehicle Assistance App",
+    img: "https://images.pexels.com/photos/4489742/pexels-photo-4489742.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    desc: "A mobile-first application for requesting roadside help (towing, fuel, puncture repair). Users share live location; nearby mechanics/tow services receive requests and can accept.",
+    why: "Used to reduce waiting time during breakdowns and improve safety. Tech: Django backend, REST APIs, Google Maps / OpenStreetMap, WebSocket for live updates, optional SMS notifications via Twilio.",
+    repo: "#"
+  },
+  student:{
+    title: "Student Record Management System",
+    img: "https://images.pexels.com/photos/5905496/pexels-photo-5905496.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    desc: "A CRUD web system to add, view, update, and delete student records. Includes simple search and secure admin authentication.",
+    why: "Used by small institutes to manage student information efficiently. Tech: Django + SQLite/MySQL, Django-auth, simple Bootstrap-like UI.",
+    repo: "#"
+  }
+};
+
+function openProject(key){
+  const p = projects[key];
+  document.getElementById('modalImg').src = p.img;
+  document.getElementById('modalTitle').textContent = p.title;
+  document.getElementById('modalDesc').textContent = p.desc;
+  document.getElementById('modalWhy').textContent = p.why;
+  document.getElementById('modalRepo').href = p.repo;
+  document.getElementById('modalBackdrop').style.display = 'flex';
+  document.getElementById('modalBackdrop').setAttribute('aria-hidden','false');
+}
+
+function closeModal(e){
+  document.getElementById('modalBackdrop').style.display = 'none';
+  document.getElementById('modalBackdrop').setAttribute('aria-hidden','true');
+}
+
+/* --------------------------
+  Contact form: EmailJS (optional) or mailto fallback
+---------------------------*/
+function submitContact(evt){
+  evt.preventDefault();
+  const name = document.getElementById('c_name').value.trim();
+  const email = document.getElementById('c_email').value.trim();
+  const msg = document.getElementById('c_msg').value.trim();
+  const status = document.getElementById('formStatus');
+
+  if(!name || !email || !msg){ status.textContent = 'Please fill all fields'; return; }
+
+  // If you want EmailJS, replace 'YOUR_PUBLIC_KEY', 'YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID'
+  if(window.emailjs && emailjs.send){
+    status.textContent = 'Sending...';
+    emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID',{
+      from_name:name, from_email:email, message:msg
+    }).then(()=>{
+      status.textContent = 'Message sent — thank you!';
+      document.getElementById('contactForm').reset();
+    }).catch((err)=>{
+      console.error(err);
+      status.textContent = 'Failed to send via EmailJS — using fallback.';
+      fallbackMail(name,email,msg);
+    });
+  } else {
+    // fallback to mailto
+    fallbackMail(name,email,msg);
+  }
+}
+
+function fallbackMail(name,email,msg){
+  const subject = encodeURIComponent('Portfolio contact from ' + name);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
+  const mailto = `mailto:mharshith585@gmail.com?subject=${subject}&body=${body}`;
+  // open user's default mail client
+  window.location.href = mailto;
+}
+
+/* --------------------------
+  OPTIONAL: initialize EmailJS if you add public key
+  (uncomment and set your public key if you want)
+---------------------------*/
+// (function(){ /* emailjs.init('YOUR_PUBLIC_KEY'); */ })();
+</script>
+</body>
+</html>
